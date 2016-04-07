@@ -87,7 +87,8 @@
                 }
             }
         }
-        [self.mainSection addItem:[RETableViewItem itemWithTitle:title accessoryType:accessoryType selectionHandler:^(RETableViewItem *selectedItem) {
+
+        RETableViewItem *optionItem = [RETableViewItem itemWithTitle:title accessoryType:accessoryType selectionHandler:^(RETableViewItem *selectedItem) {
             UITableViewCell *cell = [weakSelf.tableView cellForRowAtIndexPath:selectedItem.indexPath];
             if (!weakSelf.multipleChoice) {
                 for (NSIndexPath *indexPath in [weakSelf.tableView indexPathsForVisibleRows]) {
@@ -114,7 +115,6 @@
                         if (![val isEqualToString:selectedItem.title])
                             [items addObject:val];
                     }
-                    
                     item.value = items;
                 } else {
                     selectedItem.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -127,7 +127,9 @@
                 if (weakSelf.completionHandler)
                     weakSelf.completionHandler(selectedItem);
             }
-        }]];
+        }];
+        optionItem.textAlignment = NSTextAlignmentNatural;
+        [self.mainSection addItem:optionItem];
     };
     
     for (RETableViewItem *item in self.options) {
